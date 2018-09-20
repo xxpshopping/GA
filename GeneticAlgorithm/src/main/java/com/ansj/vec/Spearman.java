@@ -92,9 +92,9 @@ public class Spearman {
 
 		double size = fileword.size();
 		double spearman = 1 - (6 * d) / (size * (size * size - 1));
-		System.out.println("忽略的词" + loss.size());
-		System.out.println("参与训练的词" + trainword.size());
-		System.out.println("词相似度" + (spearman * 100));
+//		System.out.println("忽略的词" + loss.size());
+//		System.out.println("参与训练的词" + trainword.size());
+//		System.out.println("词相似度" + (spearman * 100));
 		return spearman * 100;
 	}
 
@@ -224,7 +224,7 @@ public class Spearman {
 			String[] split;
 			while ((line = read.readLine()) != null) {
 				ArrayList<String> temparray = new ArrayList<String>();
-				split = line.split(" ");
+				split = line.split("\t");
 				for (int i = 0; i < split.length; i++) {//split.length=3
 					temparray.add(split[i]);//temparray:worda,wordb,wordsim
 				}

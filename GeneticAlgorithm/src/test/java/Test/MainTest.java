@@ -236,12 +236,10 @@ public class MainTest {
 			}
 		} else {
 			//String[] testData = { "English/en/EN-MEN-TR-3k.txt", "English/en/EN-MTurk-771.txt",  };
-			String[] testData = { "EN-MEN-TR-3k.txt","EN-YP-130.txt","EN-MTurk-771.txt" };
-			
+			//String[] testData = { "EN-MEN-TR-3k.txt","EN-YP-130.txt","EN-MTurk-771.txt" };
+			String[] testData = {"EN-MTurk-287.txt","EN-RG-65.txt","EN-WS-353-SIM.txt","EN-RW-STANFORD.txt","EN-MC-30.txt","EN-WS-353-REL.txt","EN-WS-353-ALL.txt"};
 			for (int i = 0; i < testData.length; i++) {
 				String evaluatefile = testData[i];
-				//String trainfile = "/home/muhe/fastText-0.1.0/model.vec";
-				//String trainfile = "/home/muhe/Glove/eng_vectors.txt";
 				String trainfile = "E:\\文本表示语料\\English\\part\\遗传算法\\result.txt";
 				System.out.println(trainfile);
 				Spearman spe = new Spearman(trainfile, evaluatefile,isOnlypinyin);

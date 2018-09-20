@@ -220,7 +220,7 @@ public class Spearman {
 			while ((line = read.readLine()) != null) {
 
 				ArrayList<String> temparray = new ArrayList<String>();
-				split = line.split(" ");
+				split = line.split("\t");
 				for (int i = 0; i < split.length; i++) {
 					temparray.add(split[i]);
 				}

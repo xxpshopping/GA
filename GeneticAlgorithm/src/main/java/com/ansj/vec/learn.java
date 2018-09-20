@@ -30,7 +30,7 @@ public class learn {
 	int Chromosome_length= 100;//染色体长度
 	double rate_crossover=0.5;//交叉率
 	double rate_mutation=0.05;//变异率
-	int iteration_num=6;//迭代次数
+	int iteration_num=100;//迭代次数
 	String name11 = "";
 	
 	//存放文件所有词的
@@ -116,7 +116,7 @@ public class learn {
 			e.printStackTrace();
 		}
 		try {
-			InputStreamReader input = new InputStreamReader(new FileInputStream("EN-MEN-TR-3k.txt"), "utf-8");
+			InputStreamReader input = new InputStreamReader(new FileInputStream("EN-RG-65.txt"), "utf-8");
 			BufferedReader read = new BufferedReader(input);
 			
 			String line;			
@@ -124,7 +124,7 @@ public class learn {
 			int num = 0;
 			int i=0;
 			while ((line = read.readLine()) != null) {
-				factors = line.split(" ");
+				factors = line.split("\t");
 				if(twords.containsKey(factors[0])&&!words.containsKey(factors[0])) {
 					num=twords.get(factors[0]);
 					words.put(factors[0],i);
@@ -180,7 +180,7 @@ public class learn {
 			}
 			//计算相似度
 			//System.out.println(Arrays.toString(total_word.get("the").syn));
-			Spearman spearman=new Spearman(total_word, "EN-MEN-TR-3k.txt");
+			Spearman spearman=new Spearman(total_word, "EN-RG-65.txt");
 			ListEntry a=new ListEntry();
 			a.fitness=spearman.computeSpearman();
 			wordsim.put(i, a);
@@ -339,6 +339,9 @@ public class learn {
 	        crossover();
 	        //对交叉后的种群进行变异操作
 	        mutation();
+//	        if(bestfitness>72.4)
+//	        	break;
+	        
 	        System.out.println(bestindex+"\t"+bestfitness);
 	        random_alist=new_random_alist;
 	        wordsim.clear();

@@ -26,12 +26,13 @@ import com.ansj.vec.domain.Neuron;
 
 public class learn2 {
 	
-	int Population_size=200;//种群规模,每个词有200个个体
+	int Population_size=300;//种群规模,每个词有200个个体
 	int Chromosome_length= 100;//染色体长度
-	double rate_crossover=0.5;//交叉率
-	double rate_mutation=0.05;//变异率
-	int iteration_num=20;//迭代次数
+	double rate_crossover=0.1;//交叉率
+	double rate_mutation=0.1;//变异率
+	int iteration_num=30;//迭代次数
 	String name11 = "";
+	
 	
 	//存放文件所有词的
 	private Map<String, Integer> words = new HashMap<String, Integer>();
@@ -181,22 +182,27 @@ public class learn2 {
 			}
 			//计算相似度
 			//System.out.println(Arrays.toString(total_word.get("the").syn));
-			Spearman spearman1=new Spearman(total_word, "ES-RG-65.txt");
-			Spearman spearman2=new Spearman(total_word, "ES-MC-30.txt");
-			Spearman spearman3=new Spearman(total_word, "ES-WS-353.txt");
+			Spearman spearman1=new Spearman(total_word, "EN-MTurk-287.txt");
+			Spearman spearman2=new Spearman(total_word, "EN-WS-353-REL.txt");
+			Spearman spearman3=new Spearman(total_word, "EN-WS-353-ALL.txt");
 			double a1=spearman1.computeSpearman();
 			double a2=spearman2.computeSpearman();
 			double a3=spearman3.computeSpearman();
 			
 			ListEntry a=new ListEntry();
-			a.fitness=(a1+a2+a3)/3;
+			a.fitness=a1;
 			wordsim.put(i, a);
 			if(bestfitness<wordsim.get(i).fitness) {
 				bestindex=index_per;
 				bestfitness=wordsim.get(i).fitness;
 			}
 			//total_word=null;
-			System.out.println("bestfitness:  "+bestfitness);
+			//System.out.println("bestfitness:  "+bestfitness);
+			if(a1>74&&a2>72&&a3>43) {
+				System.out.println(a1+","+a2+","+a3);
+				System.out.println(index_per);
+			}
+			
 		}
 	}
 	
@@ -224,7 +230,7 @@ public class learn2 {
 		Random ran = new Random();
 //		bestindex=random_alist.get(0);
 //		double bestfitness=wordsim.get(0).fitness;
-		for(int i=0;i<Population_size;i++) {
+		for(int i=0;i<Population_size-1;i++) {
 			float n = ran.nextFloat();
 			if(n<wordsim.get(i).cumu_fit) {
 				new_random_alist.set(i, random_alist.get(i));
@@ -238,8 +244,8 @@ public class learn2 {
 					}
 				}
 			}
-
 		}
+		new_random_alist.set(Population_size-1, bestindex);
 		
 		
 	}
@@ -343,12 +349,14 @@ public class learn2 {
 			//更新种群内个体的属性值
 	        fresh_property(wordsim);
 			//挑选优秀个体组成新的种群
-			seletc_ts(wordsim);
+	        seletc_prw(wordsim);
 			//对选择后的种群进行交叉操作
 	        crossover();
 	        //对交叉后的种群进行变异操作
 	        mutation();
-	        System.out.println(bestindex+"\t"+bestfitness);
+//	        if(bestfitness>79)
+//	        	break;
+//	        System.out.println(bestindex+"\t"+bestfitness);
 	        random_alist=new_random_alist;
 	        wordsim.clear();
 		}
@@ -399,8 +407,8 @@ public class learn2 {
 	
 	public static void main(String[] args) throws IOException {
 		learn2 a=new learn2();
-		File filein =new File("E:\\文本表示语料\\Spanish\\2fasttext.txt");
-		File fileout =new File("E:\\文本表示语料\\Spanish\\result.txt");
+		File filein =new File("E:\\文本表示语料\\English\\part\\遗传算法\\fasttest+fasttest.txt");
+		File fileout =new File("E:\\文本表示语料\\English\\part\\遗传算法\\result.txt");
 		a.trainModel(filein);
 		a.saveModel(fileout);
 		
